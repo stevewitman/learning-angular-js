@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <title>Learning Angular JS</title>
+    <script>
+      var myApp = angular.module('myApp', []);
+
+      myApp.controller('ContactsCtrl', ['$scope', function($scope) {
+        $scope.people = [
+          {name: 'Jack', nicknames: ['Moshier', 'Shorty']},
+          {name: 'Jill', nicknames: ['Backslash']},
+          {name: 'Jane', nicknames: ['Moose']},
+        ];
+      }]);
+    </script>
+  </head>
+  <body ng-controller="ContactsCtrl">
+    <div ng-repeat="person in people">
+      {{ person.name }}<br>
+      <span ng-repeat="nickname in person.nicknames">
+      <!-- BUG - there is an extra before the comma??? -->
+      <span ng-show='$index>0'>, </span>
+        Nickname: {{nickname}}
+      </span>
+    </div>
+  </body>
+</html>

@@ -9,9 +9,9 @@
     myApp.controller('CostCtrl', ['$scope', function($scope) {
       $scope.cost = 0.00;
       $scope.add_tax = true;
+      $scope.total_bill = true;
       var update = function() {
         $scope.tax = $scope.add_tax ? $scope.cost * 0.15 : 0.0;
-        // $scope.total = parseFloat($scope.cost) + $scope.tax + $scope.shipping.amount;
         $scope.total = parseFloat($scope.cost) + $scope.tax + parseFloat($scope.shipping.amount) + parseFloat($scope.warranty.amount);
       }
       $scope.$watch('cost + add_tax', update); // cost(value) + add_tax(boolean)
@@ -57,7 +57,7 @@
       </p>
       Warranty: <select ng-model="warranty" ng-options="s.name for s in warranty_pkg"></select></br></br>
       Shipping:</br>
-      <!-- need to fix ... no radio button selected for default -->
+      <!-- BUG - need to fix ... no radio button selected for default -->
       <label ng-repeat="s in shipping_options">
         <input type="radio" ng-model="$parent.shipping" ng-value="{{s}}">{{s.name}}</input></br>
       </label></br>
