@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <title>Learning Angular JS</title>
+    <script>
+      var myApp = angular.module('myApp', []);
+
+      myApp.controller('ContactsCtrl', ['$scope', function($scope) {
+        $scope.people = [
+          {name: 'Jack', nicknames: ['Beanstalk', 'Shorty']},
+          {name: 'Jill', nicknames: ['Backslash']},
+          {name: 'Jane', nicknames: ['Moose']},
+        ];
+      }]);
+
+      myApp.controller('PersonCtrl', ['$scope', function($scope) {
+        $scope.show = function() {
+          $scope.person.show_nicknames=true;
+        }
+        $scope.hide = function() {
+          $scope.person.show_nicknames=false;
+        }
+      }]);
+    </script>
+  </head>
+  <body ng-controller="ContactsCtrl">
+    <div ng-repeat="person in people" ng-controller="PersonCtrl">
+      {{ person.name }}
+      [<a href="#" ng-click="show()" ng-hide="person.show_nicknames">Show Nickname</a>
+      <a href="#" ng-click="hide()" ng-show="person.show_nicknames">Hide Nickname</a>
+      ]
+      <div style="margin-left: 50px;" ng-show="person.show_nicknames">
+        <div ng-repeat="nickname in person.nicknames">
+          {{nickname}}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
