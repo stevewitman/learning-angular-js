@@ -12,6 +12,9 @@
           {name: 'Jill', nicknames: ['Backslash']},
           {name: 'Jane', nicknames: ['Moose']},
         ];
+        $scope.add = function() {
+          $scope.people.push({name: 'John', nicknames: ['J-unit']});
+        }
       }]);
 
       myApp.controller('PersonCtrl', ['$scope', function($scope) {
@@ -25,6 +28,7 @@
     </script>
   </head>
   <body ng-controller="ContactsCtrl">
+    <button ng-click="add()">Add</button>
     <div ng-repeat="person in people" ng-controller="PersonCtrl">
       {{ person.name }}
       [<a href="#" ng-click="show()" ng-hide="person.show_nicknames">Show Nickname</a>
