@@ -12,7 +12,7 @@
       var update = function() {
         $scope.tax = $scope.add_tax ? $scope.cost * 0.15 : 0.0;
         // $scope.total = parseFloat($scope.cost) + $scope.tax + $scope.shipping.amount;
-        $scope.total = parseFloat($scope.cost) + $scope.tax + parseFloat($scope.shipping) + parseFloat($scope.warranty.amount);
+        $scope.total = parseFloat($scope.cost) + $scope.tax + parseFloat($scope.shipping.amount) + parseFloat($scope.warranty.amount);
       }
       $scope.$watch('cost + add_tax', update); // cost(value) + add_tax(boolean)
       $scope.$watch('cost * tax', update);
@@ -32,13 +32,12 @@
       ];
       $scope.warranty = $scope.warranty_pkg[0];
 
-      // $scope.shipping_options = [
-      //   {amount:10.00, name:"Flat Rate - $10"},
-      //   {amount:20.00, name:"Express - $20"},
-      //   {amount:30.00, name:"Super Express - $30"},
-      // ];
-      // $scope.shipping = $scope.shipping_options[0];
-      $scope.shipping = 10.00;
+      $scope.shipping_options = [
+        {amount:0.00, name:"Free (7 days)"},
+        {amount:20.00, name:"Standard (3 day) - $15"},
+        {amount:30.00, name:"Express (1 day) - $30"},
+      ];
+      $scope.shipping = $scope.shipping_options[0];
     }]);
 
     </script>
@@ -49,17 +48,19 @@
         <input type="checkbox" ng-model="add_tax">Add Tax
         <input type="checkbox" ng-model="total_bill">Show Total
       </div></br>
-      Cost: <input type="text" ng-model="cost" placeholder="cost" /></br></br>
-      Warranty: <select ng-model="warranty" ng-options="s.name for s in warranty_pkg"></select></br></br>
-      Shipping: <input type="radio" ng-model="shipping" value="10.00">Flat Rate</input>
-      <input type="radio" ng-model="shipping" value="20.00">Express</input>
-      <input type="radio" ng-model="shipping" value="30.00">Super Express</input>
+      Cost: <input type="text" ng-model="cost" placeholder="cost" /></br>
       <p>
         This is your cost: {{ cost | currency }}
       </p>
       <p>
         This is your tax: {{ tax | currency }}
       </p>
+      Warranty: <select ng-model="warranty" ng-options="s.name for s in warranty_pkg"></select></br></br>
+      Shipping:</br>
+      <!-- need to fix ... no radio button selected for default -->
+      <label ng-repeat="s in shipping_options">
+        <input type="radio" ng-model="$parent.shipping" ng-value="{{s}}">{{s.name}}</input></br>
+      </label></br>
       <p style="display:{{bill_display}}">
         This is your total: {{ total | currency }}
         <button ng-click="add()">Add</button>
