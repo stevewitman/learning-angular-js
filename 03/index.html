@@ -17,14 +17,15 @@
   </head>
   <body ng-controller="ContactsCtrl">
     <div ng-repeat="person in people">
-      {{ person.name }}<br>
-      <span ng-repeat="nickname in person.nicknames">
-      <!-- BUG - there is an extra space before the comma??? -->
-      <!-- <span ng-show='$index>0'>, </span> -->
-      <!-- BUG - still extra space -->
-      <span ng-if='$index>0'>, </span>
-        Nickname: {{nickname}}
-      </span>
+      {{ person.name }}
+      [<a href="#" ng-click="person.show_nicknames=true" ng-hide="person.show_nicknames">Show Nickname</a>
+      <a href="#" ng-click="person.show_nicknames=false" ng-show="person.show_nicknames">Hide Nickname</a>
+      ]
+      <div style="margin-left: 50px;" ng-show="person.show_nicknames">
+        <div ng-repeat="nickname in person.nicknames">
+          {{nickname}}
+        </div>
+      </div>
     </div>
   </body>
 </html>
