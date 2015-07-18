@@ -11,10 +11,12 @@
       $scope.add_tax = true;
       var update = function() {
         $scope.tax = $scope.add_tax ? $scope.cost * 0.15 : 0.0;
-        $scope.total = parseFloat($scope.cost) + $scope.tax + $scope.shipping.amount;
+        // $scope.total = parseFloat($scope.cost) + $scope.tax + $scope.shipping.amount;
+        $scope.total = parseFloat($scope.cost) + $scope.tax + parseFloat($scope.shipping) + parseFloat($scope.warranty.amount);
       }
       $scope.$watch('cost + add_tax', update); // cost(value) + add_tax(boolean)
       $scope.$watch('cost * tax', update);
+      $scope.$watch('warranty', update);
       $scope.$watch('shipping', update);
       $scope.$watch('total_bill', function() {
         $scope.bill_display = $scope.total_bill ? 'block' : 'none';
@@ -23,12 +25,20 @@
       $scope.add = function() {
         $scope.final_bill += $scope.total;
       }
-      $scope.shipping_options = [
-        {amount:10.00, name:"Flat Rate"},
-        {amount:20.00, name:"Express"},
-        {amount:30.00, name:"Super Express"},
+      $scope.warranty_pkg = [
+        {amount:0.00, name:"None"},
+        {amount:20.00, name:"Standard - $20"},
+        {amount:35.00, name:"Extended - $35"},
       ];
-      $scope.shipping = $scope.shipping_options[0];
+      $scope.warranty = $scope.warranty_pkg[0];
+
+      // $scope.shipping_options = [
+      //   {amount:10.00, name:"Flat Rate - $10"},
+      //   {amount:20.00, name:"Express - $20"},
+      //   {amount:30.00, name:"Super Express - $30"},
+      // ];
+      // $scope.shipping = $scope.shipping_options[0];
+      $scope.shipping = 10.00;
     }]);
 
     </script>
@@ -38,9 +48,12 @@
       <div>
         <input type="checkbox" ng-model="add_tax">Add Tax
         <input type="checkbox" ng-model="total_bill">Show Total
-      </div>
-      Cost: <input type="text" ng-model="cost" placeholder="cost" /></br>
-      Shipping: <select ng-model="shipping" ng-options="s.name for s in shipping_options"></select>
+      </div></br>
+      Cost: <input type="text" ng-model="cost" placeholder="cost" /></br></br>
+      Warranty: <select ng-model="warranty" ng-options="s.name for s in warranty_pkg"></select></br></br>
+      Shipping: <input type="radio" ng-model="shipping" value="10.00">Flat Rate</input>
+      <input type="radio" ng-model="shipping" value="20.00">Express</input>
+      <input type="radio" ng-model="shipping" value="30.00">Super Express</input>
       <p>
         This is your cost: {{ cost | currency }}
       </p>
