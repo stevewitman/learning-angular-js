@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <title>Learning Angular JS</title>
+    <script>
+    var myApp = angular.module('myApp', []);
+
+    myApp.controller('MainCtrl', ['$scope', function($scope) {
+      $scope.user = null;
+      $scope.setUser = function( name ) {
+        $scope.user = name;
+      }
+    }]);
+    myApp.controller('LoginCtrl', ['$scope', function($scope) {
+      $scope.name = '';
+      $scope.login = function() {
+        $scope.setUser( $scope.name );
+      }
+      $scope.logout = function() {
+        $scope.setUser( null );
+      }
+    }]);
+    </script>
+    <style>
+
+    </style>
+  </head>
+  <body ng-controller="MainCtrl">
+    <div>
+      <div ng-show="user">{{user}} is logged in</div>
+      <div ng-hide="user">No User logged in</div>
+    </div>
+    <div ng-controller="LoginCtrl" style="float:right;padding:5px;border:1px solid #ccc;background:#eee;">
+      <div ng-hide="user">
+        Login: <input ng-model="name">
+      </div>
+      <div>
+        <button ng-show="user" ng-click="logout()">Logout</button>
+        <button ng-hide="user" ng-click="login()">Login</button>
+      </div>
+    </div>
+
+
+  </body>
+</html>
