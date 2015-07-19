@@ -8,17 +8,20 @@
 
     myApp.controller('MainCtrl', ['$scope', function($scope) {
       $scope.user = null;
-      $scope.setUser = function( name ) {
+      $scope.$on('login', function(event,name) {
         $scope.user = name;
-      }
+      });
+      $scope.$on('logout', function(event) {
+        $scope.user = null;
+      });
     }]);
     myApp.controller('LoginCtrl', ['$scope', function($scope) {
       $scope.name = '';
       $scope.login = function() {
-        $scope.setUser( $scope.name );
+        $scope.$emit('login', $scope.name);
       }
       $scope.logout = function() {
-        $scope.setUser( null );
+        $scope.$emit('logout');
       }
     }]);
     </script>
